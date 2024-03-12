@@ -22,7 +22,6 @@ class ContractController extends Controller
      */
     public function create()
     {
-        return view('contract');
     }
 
     /**
@@ -31,52 +30,56 @@ class ContractController extends Controller
     public function store(StoreContractRequest $request)
     {
         $request->validated();
-        $docPattern   = storage_path('app/public/шартнома янги.docx');
+        $docPattern   = storage_path('app/local/шартнома янги.docx');
         $pathToSave   = storage_path('app/public/Contracts.docx');
+
+        $requestData = $request->all();
+        $contract =  Contract::create($requestData);
+        $data = $contract->getAttributes();
         $replacements = [
             [
-                'contract_number'        => 7777,
-                'contract_date'          => date('d.m.Y'),
-                'person'                 => $request->input('person'),
-                'passport'               => $request->input('passport'),
-                'passport_date'          => date('d.m.Y', strtotime($request->input('passport_date'))),
-                'givenBy'                => $request->input('givenBy'),
-                'address'                => $request->input('address'),
-                'phone'                  => $request->input('phone'),
-                'product'                => $request->input('product'),
-                'amount'                 => $request->input('amount'),
-                'total'                  => $request->input('total'),
-                'description'            => $request->input('description'),
-                'buyer'                  => $request->input('buyer'),
-                'buyer_passport'         => $request->input('buyer_passport'),
-                'buyer_passport_givenBy' => $request->input('buyer_passport_givenBy'),
-                'buyer_passport_date'    => date('d.m.Y', strtotime($request->input('passport_date'))),
-                'buyer_address'          => $request->input('buyer_address'),
-                'buyer_description'      => $request->input('buyer_description'),
-                'paymentDate1'           => date('d.m.Y', strtotime($request->input('paymentDate1'))),
-                'paymentAmount1'         => $request->input('paymentAmount1'),
-                'paymentDate2'           => date('d.m.Y', strtotime($request->input('paymentDate2'))),
-                'paymentAmount2'         => $request->input('paymentAmount2'),
-                'paymentDate3'           => date('d.m.Y', strtotime($request->input('paymentDate3'))),
-                'paymentAmount3'         => $request->input('paymentAmount3'),
-                'paymentDate4'           => date('d.m.Y', strtotime($request->input('paymentDate4'))),
-                'paymentAmount4'         => $request->input('paymentAmount4'),
-                'paymentDate5'           => date('d.m.Y', strtotime($request->input('paymentDate5'))),
-                'paymentAmount5'         => $request->input('paymentAmount5'),
-                'paymentDate6'           => date('d.m.Y', strtotime($request->input('paymentDate6'))),
-                'paymentAmount6'         => $request->input('paymentAmount6'),
-                'paymentDate7'           => date('d.m.Y', strtotime($request->input('paymentDate7'))),
-                'paymentAmount7'         => $request->input('paymentAmount7'),
-                'paymentDate8'           => date('d.m.Y', strtotime($request->input('paymentDate8'))),
-                'paymentAmount8'         => $request->input('paymentAmount8'),
-                'paymentDate9'           => date('d.m.Y', strtotime($request->input('paymentDate9'))),
-                'paymentAmount9'         => $request->input('paymentAmount9'),
-                'paymentDate10'          => date('d.m.Y', strtotime($request->input('paymentDate10'))),
-                'paymentAmount10'        => $request->input('paymentAmount10'),
-                'paymentDate11'          => date('d.m.Y', strtotime($request->input('paymentDate11'))),
-                'paymentAmount11'        => $request->input('paymentAmount11'),
-                'paymentDate12'          => date('d.m.Y', strtotime($request->input('paymentDate12'))),
-                'paymentAmount12'        => $request->input('paymentAmount12'),
+                'contract_number'        => $data['id'],
+                'contract_date'          => date('d.m.Y', strtotime($data['created_at'])),
+                'person'                 => $data['person'],
+                'passport'               => $data['passport'],
+                'passport_date'          => date('d.m.Y', strtotime($data['passport_date'])),
+                'givenBy'                => $data['givenBy'],
+                'address'                => $data['address'],
+                'phone'                  => $data['phone'],
+                'product'                => $data['product'],
+                'amount'                 => $data['amount'],
+                'total'                  => $data['total'],
+                'description'            => $data['description'],
+                'buyer'                  => $data['buyer'],
+                'buyer_passport'         => $data['buyer_passport'],
+                'buyer_passport_givenBy' => $data['buyer_passport_givenBy'],
+                'buyer_passport_date'    => date('d.m.Y', strtotime($data['passport_date'])),
+                'buyer_address'          => $data['buyer_address'],
+                'buyer_description'      => $data['buyer_description'],
+                'paymentDate1'           => date('d.m.Y', strtotime($data['paymentDate1'])),
+                'paymentAmount1'         => $data['paymentAmount1'],
+                'paymentDate2'           => date('d.m.Y', strtotime($data['paymentDate2'])),
+                'paymentAmount2'         => $data['paymentAmount2'],
+                'paymentDate3'           => date('d.m.Y', strtotime($data['paymentDate3'])),
+                'paymentAmount3'         => $data['paymentAmount3'],
+                'paymentDate4'           => date('d.m.Y', strtotime($data['paymentDate4'])),
+                'paymentAmount4'         => $data['paymentAmount4'],
+                'paymentDate5'           => date('d.m.Y', strtotime($data['paymentDate5'])),
+                'paymentAmount5'         => $data['paymentAmount5'],
+                'paymentDate6'           => date('d.m.Y', strtotime($data['paymentDate6'])),
+                'paymentAmount6'         => $data['paymentAmount6'],
+                'paymentDate7'           => date('d.m.Y', strtotime($data['paymentDate7'])),
+                'paymentAmount7'         => $data['paymentAmount7'],
+                'paymentDate8'           => date('d.m.Y', strtotime($data['paymentDate8'])),
+                'paymentAmount8'         => $data['paymentAmount8'],
+                'paymentDate9'           => date('d.m.Y', strtotime($data['paymentDate9'])),
+                'paymentAmount9'         => $data['paymentAmount9'],
+                'paymentDate10'          => date('d.m.Y', strtotime($data['paymentDate10'])),
+                'paymentAmount10'        => $data['paymentAmount10'],
+                'paymentDate11'          => date('d.m.Y', strtotime($data['paymentDate11'])),
+                'paymentAmount11'        => $data['paymentAmount11'],
+                'paymentDate12'          => date('d.m.Y', strtotime($data['paymentDate12'])),
+                'paymentAmount12'        => $data['paymentAmount12'],
             ],
         ];
 
@@ -86,7 +89,7 @@ class ContractController extends Controller
             $templateProcessor->saveAs($pathToSave);
         }
 
-        return redirect()->route('contract')->with('message', 'Contract successfully documented');
+        return redirect()->route('download')->with('message', 'Shartnoma muvaffaqqiyatli tuzildi !');
     }
 
     /**
@@ -119,5 +122,10 @@ class ContractController extends Controller
     public function destroy(Contract $contract)
     {
         //
+    }
+
+    public function download()
+    {
+        return view('download');
     }
 }
