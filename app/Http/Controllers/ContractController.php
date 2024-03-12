@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -6,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreContractRequest;
 use App\Http\Requests\UpdateContractRequest;
 use App\Models\Contract;
+use Illuminate\Support\Facades\Schema;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class ContractController extends Controller
@@ -15,13 +17,16 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return view('contract');
+        $schedule = count(Schema::getColumnListing('payment_schedules')) - 4;
+        return view('contract', compact('schedule'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {}
+    public function create()
+    {
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -31,6 +36,7 @@ class ContractController extends Controller
         $requestData  = $request->validated();
         $contract     = Contract::query()->create($requestData);
         $data         = $contract->getAttributes();
+
         $replacements = [
             [
                 'contract_number'        => $data['id'],

@@ -31,9 +31,31 @@
                         <x-field name="buyer_passport_date" type='date'>Berilgan sanasi:</x-field>
                         <x-textarea name="buyer_address">Yashash manzili:</x-textarea>
                         <x-textarea name="buyer_description">Izoh:</x-textarea>
-                        <x-field name="paymentDate1" type='date'>1-to'lov sansi:</x-field>
-                        <x-field name="paymentAmount1" type="number">1-to'lov miqdori:</x-field>
-                        <x-field name="paymentDate2" type='date'>2-to'lov sansi:</x-field>
+                        <table class="w-full border-collapse border dark:border-slate-100 border-black">
+                            <thead>
+                                <tr class="py-2">
+                                    <th class="border dark:border-slate-100 border-black p-2">To'lovlar grafigi</th>
+                                    <th class="border dark:border-slate-100 border-black p-2">To'lov sanasi</th>
+                                    <th class="border dark:border-slate-100 border-black p-2">To'lov miqdori</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for ($i = 1; $i <= $schedule / 2; $i++)
+                                    <tr>
+                                        <th class="border dark:border-slate-100 border-black p-2">
+                                            {{ $i }}-to'lov
+                                        </th>
+                                        <td class="border dark:border-slate-100 border-black py-2 pr-4">
+                                            <x-field name="paymentDate{{ $i }}" type='date' />
+                                        </td>
+                                        <td class="border dark:border-slate-100 border-black py-2">
+                                            <x-field name="paymentAmount{{ $i }}" type="number" />
+                                        </td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table>
+                        {{-- <x-field name="paymentDate2" type='date'>2-to'lov sansi:</x-field>
                         <x-field name="paymentAmount2" type="number">2-to'lov miqdori:</x-field>
                         <x-field name="paymentDate3" type='date'>3-to'lov sansi:</x-field>
                         <x-field name="paymentAmount3" type="number">3-to'lov miqdori:</x-field>
@@ -54,7 +76,7 @@
                         <x-field name="paymentDate11" type='date'>11-to'lov sansi:</x-field>
                         <x-field name="paymentAmount11" type="number">11-to'lov miqdori:</x-field>
                         <x-field name="paymentDate12" type='date'>12-to'lov sansi:</x-field>
-                        <x-field name="paymentAmount12" type="number">12-to'lov miqdori:</x-field>
+                        <x-field name="paymentAmount12" type="number">12-to'lov miqdori:</x-field> --}}
                         <div>
                             <button type="submit"
                                 class="rounded-md bg-indigo-600 mr-2 px-11 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Send</button>
