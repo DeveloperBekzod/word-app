@@ -30,11 +30,8 @@ class ContractController extends Controller
     public function store(StoreContractRequest $request)
     {
         $request->validated();
-        $docPattern   = storage_path('app/local/шартнома янги.docx');
-        $pathToSave   = storage_path('app/public/Contract.docx');
-
         $requestData = $request->all();
-        $contract =  Contract::create($requestData);
+        $contract = Contract::create($requestData);
         $data = $contract->getAttributes();
         $replacements = [
             [
@@ -82,6 +79,9 @@ class ContractController extends Controller
                 'paymentAmount12'        => $data['paymentAmount12'],
             ],
         ];
+
+        $docPattern = storage_path('app/local/шартнома янги.docx');
+        $pathToSave = storage_path('app/public/Contract.docx');
 
         if (file_exists($docPattern)) {
             $templateProcessor = new TemplateProcessor($docPattern);

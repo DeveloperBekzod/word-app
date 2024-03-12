@@ -12,7 +12,7 @@
                     <form class="space-y-6" action="{{ route('contract') }}" method="POST">
                         @csrf
                         @method('POST')
-                        <x-field name="person" type="text">Foydalanuvchi:</x-field>
+                        <x-field name="person" type="text">Foydalanuvchi FISH:</x-field>
                         <x-field name="passport" type="text" pattern="[A-Z]{2} [0-9]{7}"
                             placeholder="AA 7777777">Passport seriya va raqami:</x-field>
                         <x-field name="passport_date" type="date">Berilgan sanasi:</x-field>
@@ -24,7 +24,7 @@
                         <x-field name="amount" type="number">Miqrodi (dona):</x-field>
                         <x-field name="total" type="number">Qiymati:</x-field>
                         <x-textarea name="description">Izoh:</x-textarea>
-                        <x-field name="buyer" type='text'>Xaridor:</x-field>
+                        <x-field name="buyer" type='text'>Haridor FISH:</x-field>
                         <x-field name="buyer_passport" type='text' pattern="[A-Z]{2} [0-9]{7}"
                             placeholder="AA 7777777">Passport seriya va raqami:</x-field>
                         <x-field name="buyer_passport_givenBy" type='text'>Kim tomonidan berilgan:</x-field>
