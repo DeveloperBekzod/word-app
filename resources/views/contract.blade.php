@@ -12,6 +12,11 @@
                     <form class="space-y-6" action="{{ route('contract') }}" method="POST">
                         @csrf
                         @method('POST')
+                        <div class="grid grid-cols-2 gap-4">
+                            <x-field name="contract_number" type="number">Shartnoma
+                                raqami:</x-field>
+                            <x-field name="contract_date" type="date">SHartnoma sanasi</x-field>
+                        </div>
                         <x-field name="person" type="text">Foydalanuvchi FISH:</x-field>
                         <x-field name="passport" type="text" pattern="[A-Z]{2} [0-9]{7}"
                             placeholder="AA 7777777">Passport seriya va raqami:</x-field>
@@ -22,7 +27,8 @@
                             placeholder='+998999999999'>Telefon:</x-field>
                         <x-field name="product" type="text">Mahsulot nomi:</x-field>
                         <x-field name="amount" type="number">Miqrodi (dona):</x-field>
-                        <x-field name="total" type="number">Qiymati:</x-field>
+                        <x-field name="price" type="number">Mahsulot narxi(so'm):</x-field>
+                        <x-field name="total" type="number">Jami summa:</x-field>
                         <x-textarea name="description">Izoh:</x-textarea>
                         <x-field name="buyer" type='text'>Haridor FISH:</x-field>
                         <x-field name="buyer_passport" type='text' pattern="[A-Z]{2} [0-9]{7}"
@@ -31,7 +37,32 @@
                         <x-field name="buyer_passport_date" type='date'>Berilgan sanasi:</x-field>
                         <x-textarea name="buyer_address">Yashash manzili:</x-textarea>
                         <x-textarea name="buyer_description">Izoh:</x-textarea>
-                        <table class="w-full border-collapse border dark:border-slate-100 border-black">
+                        <div>
+                            <div class="block leading-5">To'lov turini tanlang</div>
+                            <div class="flex justify-around mb-14">
+                                <div class="mt-2">
+                                    <input id="pay12" name="payment_type" value="12" type="radio" checked>
+                                    <label for="pay12">12 oy</label>
+                                </div>
+                                <div class="mt-2">
+                                    <input id="pay9" name="payment_type" value="9" type="radio">
+                                    <label for="pay9">9 oy</label>
+                                </div>
+                                <div class="mt-2">
+                                    <input id="pay6" name="payment_type" value="6" type="radio">
+                                    <label for="pay6">6 oy</label>
+                                </div>
+                                <div class="mt-2">
+                                    <input id="pay3" name="payment_type" value="3" type="radio">
+                                    <label for="pay3">3 oy</label>
+                                </div>
+                            </div>
+                            @error('payment_type')
+                                <span class="text-red-600" role="alert">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- <table class="w-full border-collapse border dark:border-slate-100 border-black">
                             <thead>
                                 <tr class="py-2">
                                     <th class="border dark:border-slate-100 border-black p-2">To'lovlar grafigi</th>
@@ -40,7 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for ($i = 1; $i <= $schedule / 2; $i++)
+                                @for ($i = 1; $i <= $schedule; $i++)
                                     <tr>
                                         <th class="border dark:border-slate-100 border-black p-2">
                                             {{ $i }}-to'lov
@@ -55,7 +86,7 @@
                                 @endfor
                             </tbody>
                         </table>
-                        {{-- <x-field name="paymentDate2" type='date'>2-to'lov sansi:</x-field>
+                        <x-field name="paymentDate2" type='date'>2-to'lov sansi:</x-field>
                         <x-field name="paymentAmount2" type="number">2-to'lov miqdori:</x-field>
                         <x-field name="paymentDate3" type='date'>3-to'lov sansi:</x-field>
                         <x-field name="paymentAmount3" type="number">3-to'lov miqdori:</x-field>
@@ -79,10 +110,10 @@
                         <x-field name="paymentAmount12" type="number">12-to'lov miqdori:</x-field> --}}
                         <div>
                             <button type="submit"
-                                class="rounded-md bg-indigo-600 mr-2 px-11 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Send</button>
+                                class="rounded-md bg-indigo-600 mr-2 px-11 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Yuborish</button>
                             <input type="reset" placeholder=""
                                 class="rounded-md bg-red-600 px-11 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                                value="Clear">
+                                value="Tozalash">
                         </div>
                     </form>
                 </div>

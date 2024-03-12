@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreContractRequest;
 use App\Http\Requests\UpdateContractRequest;
 use App\Models\Contract;
+use App\Models\PaymentSchedule;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -17,7 +18,7 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $schedule = count(Schema::getColumnListing('payment_schedules')) - 4;
+        $schedule = (count(Schema::getColumnListing('payment_schedules')) - 4) / 2;
         return view('contract', compact('schedule'));
     }
 
@@ -31,16 +32,66 @@ class ContractController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreContractRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $requestData  = $request->validated();
+        /* $requestData  = $request->validate([
+            'contract_number'        => "required|numeric",
+            'contract_date'          => "required|date",
+            'person'                 => "required|string|max:255",
+            'passport'               => 'required|max:10|min:9',
+            'passport_date'          => 'required|date',
+            'givenBy'                => 'required|string|max:255',
+            'address'                => 'required|string',
+            'phone'                  => 'required',
+            'product'                => 'required|string|max:255',
+            'amount'                 => 'required|numeric',
+            'total'                  => 'required|numeric',
+            'description'            => 'required|string',
+            'buyer'                  => 'required|string|max:255',
+            'buyer_passport'         => 'required|max:10|min:9',
+            'buyer_passport_givenBy' => 'required|string|max:255',
+            'buyer_passport_date'    => 'required|date',
+            'buyer_address'          => 'required|string',
+            'buyer_description'      => 'required|string',
+            'paymentDate1' => 'required|date',
+            'paymentAmount1' => 'required|numeric',
+            'paymentDate2' => 'required|date',
+            'paymentAmount2' => 'required|numeric',
+            'paymentDate3' => 'required|date',
+            'paymentAmount3' => 'required|numeric',
+            'paymentDate4' => 'required|date',
+            'paymentAmount4' => 'required|numeric',
+            'paymentDate5' => 'required|date',
+            'paymentAmount5' => 'required|numeric',
+            'paymentDate6' => 'required|date',
+            'paymentAmount6' => 'required|numeric',
+            'paymentDate7' => 'required|date',
+            'paymentAmount7' => 'required|numeric',
+            'paymentDate8' => 'required|date',
+            'paymentAmount8' => 'required|numeric',
+            'paymentDate9' => 'required|date',
+            'paymentAmount9' => 'required|numeric',
+            'paymentDate10' => 'required|date',
+            'paymentAmount10' => 'required|numeric',
+            'paymentDate11' => 'required|date',
+            'paymentAmount11' => 'required|numeric',
+            'paymentDate12' => 'required|date',
+            'paymentAmount12' => 'required|numeric',
+        ]);
         $contract     = Contract::query()->create($requestData);
         $data         = $contract->getAttributes();
-
+        $requestData['contract_id'] = $data['id'];
+        $payment     = PaymentSchedule::query()->create($requestData);
+        $paymentData = $payment->getAttributes();
+        foreach ($paymentData as $key => $value) {
+            if (strpos($key, 'Date')) {
+                $paymentData[$key] = date('d.m.Y', strtotime($paymentData[$key]));
+            }
+        }
         $replacements = [
             [
-                'contract_number'        => $data['id'],
-                'contract_date'          => date('d.m.Y', strtotime($data['created_at'])),
+                'contract_number'        => $requestData['contract_number'],
+                'contract_date'          => date('d.m.Y', strtotime($requestData['contract_date'])),
                 'person'                 => $data['person'],
                 'passport'               => $data['passport'],
                 'passport_date'          => date('d.m.Y', strtotime($data['passport_date'])),
@@ -57,75 +108,67 @@ class ContractController extends Controller
                 'buyer_passport_date'    => date('d.m.Y', strtotime($data['passport_date'])),
                 'buyer_address'          => $data['buyer_address'],
                 'buyer_description'      => $data['buyer_description'],
-                'paymentDate1'           => date('d.m.Y', strtotime($data['paymentDate1'])),
-                'paymentAmount1'         => $data['paymentAmount1'],
-                'paymentDate2'           => date('d.m.Y', strtotime($data['paymentDate2'])),
-                'paymentAmount2'         => $data['paymentAmount2'],
-                'paymentDate3'           => date('d.m.Y', strtotime($data['paymentDate3'])),
-                'paymentAmount3'         => $data['paymentAmount3'],
-                'paymentDate4'           => date('d.m.Y', strtotime($data['paymentDate4'])),
-                'paymentAmount4'         => $data['paymentAmount4'],
-                'paymentDate5'           => date('d.m.Y', strtotime($data['paymentDate5'])),
-                'paymentAmount5'         => $data['paymentAmount5'],
-                'paymentDate6'           => date('d.m.Y', strtotime($data['paymentDate6'])),
-                'paymentAmount6'         => $data['paymentAmount6'],
-                'paymentDate7'           => date('d.m.Y', strtotime($data['paymentDate7'])),
-                'paymentAmount7'         => $data['paymentAmount7'],
-                'paymentDate8'           => date('d.m.Y', strtotime($data['paymentDate8'])),
-                'paymentAmount8'         => $data['paymentAmount8'],
-                'paymentDate9'           => date('d.m.Y', strtotime($data['paymentDate9'])),
-                'paymentAmount9'         => $data['paymentAmount9'],
-                'paymentDate10'          => date('d.m.Y', strtotime($data['paymentDate10'])),
-                'paymentAmount10'        => $data['paymentAmount10'],
-                'paymentDate11'          => date('d.m.Y', strtotime($data['paymentDate11'])),
-                'paymentAmount11'        => $data['paymentAmount11'],
-                'paymentDate12'          => date('d.m.Y', strtotime($data['paymentDate12'])),
-                'paymentAmount12'        => $data['paymentAmount12'],
+                ...$paymentData,
             ],
         ];
 
+        12 talik grafik uchun
         $docPattern = storage_path('app/local/шартнома янги.docx');
         $pathToSave = storage_path('app/public/Contract.docx');
-
         if (file_exists($docPattern)) {
             $templateProcessor = new TemplateProcessor($docPattern);
             $templateProcessor->cloneBlock('mainBLock', 0, true, false, $replacements);
             $templateProcessor->saveAs($pathToSave);
+        } */
+
+
+
+
+
+        // Save with generated table
+        $values = [
+            'contract_number'        => $request->input('contract_number'),
+            'contract_date'          => date('d.m.Y', strtotime($request->input('contract_date'))),
+            'person'                 => $request->input('person'),
+            'passport'               => $request->input('passport'),
+            'passport_date'          => date('d.m.Y', strtotime($request->input('passport_date'))),
+            'givenBy'                => $request->input('givenBy'),
+            'address'                => $request->input('address'),
+            'phone'                  => $request->input('phone'),
+            'product'                => $request->input('product'),
+            'price'                  => $request->input('price'),
+            'amount'                 => $request->input('amount'),
+            'product_amount'         => $request->input('amount') * $request->input('price'),
+            'total'                  => $request->input('total'),
+            'description'            => $request->input('description'),
+            'buyer'                  => $request->input('buyer'),
+            'buyer_passport'         => $request->input('buyer_passport'),
+            'buyer_passport_givenBy' => $request->input('buyer_passport_givenBy'),
+            'buyer_passport_date'    => date('d.m.Y', strtotime($request->input('passport_date'))),
+            'buyer_address'          => $request->input('buyer_address'),
+            'buyer_description'      => $request->input('buyer_description'),
+        ];
+        $paymentSchedule = [];
+        $next = date('d.m.Y', strtotime($request->input('contract_date')));
+        for ($i = 1; $i <= (int)$request->input('payment_type'); $i++) {
+            $next = date('d.m.Y', strtotime('+1 month', strtotime($next)));
+            $paymentSchedule[$i - 1] = [
+                'payment' => $i,
+                'paymentDate' => $next,
+                'paymentAmount' => round($request->input('total') / (int)$request->input('payment_type'), 2),
+            ];
+        }
+        // dd($paymentSchedule);
+        $docPattern = storage_path('app/local/шартнома янги2.docx');
+        $pathToSave = storage_path('app/public/Contract.docx');
+        if (file_exists($docPattern)) {
+            $templateProcessor = new TemplateProcessor($docPattern);
+            $templateProcessor->setValues($values);
+            $templateProcessor->cloneRowAndSetValues('payment', $paymentSchedule);
+            $templateProcessor->saveAs($pathToSave);
         }
 
         return to_route('download')->with('message', 'Shartnoma muvaffaqqiyatli tuzildi !');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contract $contract)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contract $contract)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateContractRequest $request, Contract $contract)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contract $contract)
-    {
-        //
     }
 
     public function download()
