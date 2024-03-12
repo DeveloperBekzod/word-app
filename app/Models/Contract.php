@@ -1,10 +1,56 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int    $id
+ * @property string $person
+ * @property string $passport
+ * @property string $passport_date
+ * @property string $givenBy
+ * @property string $address
+ * @property string $phone
+ * @property string $product
+ * @property string $amount
+ * @property string $total
+ * @property string $description
+ * @property string $buyer
+ * @property string $buyer_passport
+ * @property string $buyer_passport_givenBy
+ * @property string $buyer_passport_date
+ * @property string $buyer_address
+ * @property string $buyer_description
+ * @property string $paymentDate1
+ * @property string $paymentAmount1
+ * @property string $paymentDate2
+ * @property string $paymentAmount2
+ * @property string $paymentDate3
+ * @property string $paymentAmount3
+ * @property string $paymentDate4
+ * @property string $paymentAmount4
+ * @property string $paymentDate5
+ * @property string $paymentAmount5
+ * @property string $paymentDate6
+ * @property string $paymentAmount6
+ * @property string $paymentDate7
+ * @property string $paymentAmount7
+ * @property string $paymentDate8
+ * @property string $paymentAmount8
+ * @property string $paymentDate9
+ * @property string $paymentAmount9
+ * @property string $paymentDate10
+ * @property string $paymentAmount10
+ * @property string $paymentDate11
+ * @property string $paymentAmount11
+ * @property string $paymentDate12
+ * @property string $paymentAmount12
+ * @property Carbon $created_at
+ */
 class Contract extends Model
 {
     use HasFactory;

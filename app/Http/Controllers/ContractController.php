@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -20,19 +21,16 @@ class ContractController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreContractRequest $request)
+    public function store(StoreContractRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $request->validated();
-        $requestData = $request->all();
-        $contract = Contract::create($requestData);
-        $data = $contract->getAttributes();
+        $requestData  = $request->validated();
+        $contract     = Contract::query()->create($requestData);
+        $data         = $contract->getAttributes();
         $replacements = [
             [
                 'contract_number'        => $data['id'],
@@ -89,7 +87,7 @@ class ContractController extends Controller
             $templateProcessor->saveAs($pathToSave);
         }
 
-        return redirect()->route('download')->with('message', 'Shartnoma muvaffaqqiyatli tuzildi !');
+        return to_route('download')->with('message', 'Shartnoma muvaffaqqiyatli tuzildi !');
     }
 
     /**
