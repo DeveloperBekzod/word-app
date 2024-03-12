@@ -126,36 +126,58 @@ class ContractController extends Controller
 
 
         // Save with generated table
+        $request->validate([
+            'contract_number'        => "required|numeric",
+            'contract_date'          => "required|date",
+            'person'                 => "required|string|max:255",
+            'passport'               => 'required|max:10|min:9',
+            'passport_date'          => 'required|date',
+            'givenBy'                => 'required|string|max:255',
+            'address'                => 'required|string',
+            'phone'                  => 'required',
+            'product'                => 'required|string|max:255',
+            'amount'                 => 'required|numeric',
+            'price'                  => 'required|numeric',
+            'total'                  => 'required|numeric',
+            'description'            => 'required|string',
+            'buyer'                  => 'required|string|max:255',
+            'buyer_passport'         => 'required|max:10|min:9',
+            'buyer_passport_givenBy' => 'required|string|max:255',
+            'buyer_passport_date'    => 'required|date',
+            'buyer_address'          => 'required|string',
+            'buyer_description'      => 'required|string',
+        ]);
+        $requestData  = $request->all();
         $values = [
-            'contract_number'        => $request->input('contract_number'),
-            'contract_date'          => date('d.m.Y', strtotime($request->input('contract_date'))),
-            'person'                 => $request->input('person'),
-            'passport'               => $request->input('passport'),
-            'passport_date'          => date('d.m.Y', strtotime($request->input('passport_date'))),
-            'givenBy'                => $request->input('givenBy'),
-            'address'                => $request->input('address'),
-            'phone'                  => $request->input('phone'),
-            'product'                => $request->input('product'),
-            'price'                  => $request->input('price'),
-            'amount'                 => $request->input('amount'),
-            'product_amount'         => $request->input('amount') * $request->input('price'),
-            'total'                  => $request->input('total'),
-            'description'            => $request->input('description'),
-            'buyer'                  => $request->input('buyer'),
-            'buyer_passport'         => $request->input('buyer_passport'),
-            'buyer_passport_givenBy' => $request->input('buyer_passport_givenBy'),
-            'buyer_passport_date'    => date('d.m.Y', strtotime($request->input('passport_date'))),
-            'buyer_address'          => $request->input('buyer_address'),
-            'buyer_description'      => $request->input('buyer_description'),
+            'contract_number'        => $requestData['contract_number'],
+            'contract_date'          => date('d.m.Y', strtotime($requestData['contract_date'])),
+            'person'                 => $requestData['person'],
+            'passport'               => $requestData['passport'],
+            'passport_date'          => date('d.m.Y', strtotime($requestData['passport_date'])),
+            'givenBy'                => $requestData['givenBy'],
+            'address'                => $requestData['address'],
+            'phone'                  => $requestData['phone'],
+            'product'                => $requestData['product'],
+            'price'                  => $requestData['price'],
+            'amount'                 => $requestData['amount'],
+            'product_amount'         => (int)$requestData['amount'] * (int)$requestData['price'],
+            'total'                  => $requestData['total'],
+            'description'            => $requestData['description'],
+            'buyer'                  => $requestData['buyer'],
+            'buyer_passport'         => $requestData['buyer_passport'],
+            'buyer_passport_givenBy' => $requestData['buyer_passport_givenBy'],
+            'buyer_passport_date'    => date('d.m.Y', strtotime($requestData['passport_date'])),
+            'buyer_address'          => $requestData['buyer_address'],
+            'buyer_description'      => $requestData['buyer_description'],
         ];
         $paymentSchedule = [];
-        $next = date('d.m.Y', strtotime($request->input('contract_date')));
-        for ($i = 1; $i <= (int)$request->input('payment_type'); $i++) {
+        $next = date('d.m.Y', strtotime($requestData['contract_date']));
+        for ($i = 1; $i <= (int)$requestData['payment_type']; $i++) {
             $next = date('d.m.Y', strtotime('+1 month', strtotime($next)));
             $paymentSchedule[$i - 1] = [
                 'payment' => $i,
                 'paymentDate' => $next,
-                'paymentAmount' => round($request->input('total') / (int)$request->input('payment_type'), 2),
+                'paymentAmount' => round($requestData['total'] / (int)$requestData['payment_type'], 2),
             ];
         }
         // dd($paymentSchedule);
