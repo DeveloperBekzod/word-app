@@ -31,7 +31,7 @@ class ContractController extends Controller
     {
         $request->validated();
         $docPattern   = storage_path('app/local/шартнома янги.docx');
-        $pathToSave   = storage_path('app/public/Contracts.docx');
+        $pathToSave   = storage_path('app/public/Contract.docx');
 
         $requestData = $request->all();
         $contract =  Contract::create($requestData);
