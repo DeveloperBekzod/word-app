@@ -28,7 +28,7 @@
                         <x-field name="phone" type="tel" pattern="+[0-9]{13}"
                             placeholder='+998999999999'>Telefon:</x-field>
                         <hr>
-                        <div class="text-xl text-center">Mahsulot:</div>
+                        <div class="text-xl text-center font-bold">Mahsulot</div>
                         <x-field name="product" type="text">Nomi:</x-field>
                         <div class="grid grid-cols-2 gap-4">
                             <x-field name="amount" type="number">Miqrodi (dona):</x-field>
