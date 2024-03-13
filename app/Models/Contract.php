@@ -40,6 +40,7 @@ class Contract extends Model
         'address',
         'phone',
         'product',
+        'price',
         'amount',
         'total',
         'description',
@@ -51,7 +52,7 @@ class Contract extends Model
         'buyer_description',
     ];
 
-    public function paymentSchedule()
+    public function paymentSchedules()
     {
         return $this->hasMany(PaymentSchedule::class);
     }

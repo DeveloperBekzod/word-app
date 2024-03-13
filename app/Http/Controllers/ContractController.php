@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateContractRequest;
+use App\Classes\NumToWord;
 use App\Models\Contract;
-use App\Models\PaymentSchedule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class ContractController extends Controller
@@ -18,21 +16,13 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $schedule = (count(Schema::getColumnListing('payment_schedules')) - 4) / 2;
-        return view('contract', compact('schedule'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
+        return view('contract');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request)
     {
         /* $requestData  = $request->validate([
             'contract_number'        => "required|numeric",
@@ -138,7 +128,7 @@ class ContractController extends Controller
             'product'                => 'required|string|max:255',
             'amount'                 => 'required|numeric',
             'price'                  => 'required|numeric',
-            'total'                  => 'required|numeric',
+            // 'total'                  => 'required|numeric',
             'description'            => 'required|string',
             'buyer'                  => 'required|string|max:255',
             'buyer_passport'         => 'required|regex: /^([A-Z]){2}\s?([0-9]){7}/',
@@ -148,6 +138,11 @@ class ContractController extends Controller
             'buyer_description'      => 'required|string',
         ]);
         $requestData  = $request->all();
+        $requestData['total'] = (int)$requestData['amount'] * (int)$requestData['price'];
+        $price = $requestData['price'];
+        $totalPrice = $requestData['total'];
+        $priceInWord = NumToWord::convertNumberToWord($price);
+        $totalPriceInWord = NumToWord::convertNumberToWord($totalPrice);
         $values = [
             'contract_number'        => $requestData['contract_number'],
             'contract_date'          => date('d.m.Y', strtotime($requestData['contract_date'])),
@@ -159,9 +154,11 @@ class ContractController extends Controller
             'phone'                  => $requestData['phone'],
             'product'                => $requestData['product'],
             'price'                  => $requestData['price'],
+            'priceInWord'            => $priceInWord,
             'amount'                 => $requestData['amount'],
-            'product_amount'         => (int)$requestData['amount'] * (int)$requestData['price'],
             'total'                  => $requestData['total'],
+            'totalInWord'            => $totalPriceInWord,
+            // 'total'                 => (int)$requestData['amount'] * (int)$requestData['price'],
             'description'            => $requestData['description'],
             'buyer'                  => $requestData['buyer'],
             'buyer_passport'         => $requestData['buyer_passport'],
@@ -180,7 +177,8 @@ class ContractController extends Controller
                 'paymentAmount' => round($requestData['total'] / (int)$requestData['payment_type'], 2),
             ];
         }
-        // dd($paymentSchedule);
+
+        // Save to Word
         $docPattern = storage_path('app/local/шартнома янги2.docx');
         $pathToSave = storage_path('app/public/Contract.docx');
         if (file_exists($docPattern)) {
@@ -190,11 +188,16 @@ class ContractController extends Controller
             $templateProcessor->saveAs($pathToSave);
         }
 
-        return to_route('download')->with('message', 'Shartnoma muvaffaqqiyatli tuzildi !');
-    }
+        // Save to DB
+        $contract     = Contract::query()->create($requestData);
+        foreach ($paymentSchedule as $key => $value) {
+            $contract->paymentSchedules()->create([
+                'paymentDate' => date('Y-m-d H:i:s', strtotime($value['paymentDate'])),
+                'paymentAmount' => $value['paymentAmount'],
+            ]);
+        }
 
-    public function download()
-    {
-        return view('download');
+        // Download file
+        return response()->download($pathToSave);
     }
 }
