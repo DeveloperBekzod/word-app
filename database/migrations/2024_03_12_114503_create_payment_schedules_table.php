@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('contract_id')->constrained();
             $table->date('paymentDate');
-            $table->unsignedBigInteger('paymentAmount');
+            $table->float('paymentAmount');
             $table->timestamps();
         });
     }
