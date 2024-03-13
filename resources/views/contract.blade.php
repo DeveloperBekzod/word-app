@@ -15,7 +15,7 @@
                         <div class="grid grid-cols-2 gap-4">
                             <x-field name="contract_number" type="number">Shartnoma
                                 raqami:</x-field>
-                            <x-field name="contract_date" type="date">SHartnoma sanasi</x-field>
+                            <x-field name="contract_date" type="date">Shartnoma sanasi</x-field>
                         </div>
                         <x-field name="person" type="text">Foydalanuvchi FISH:</x-field>
                         <div class="grid grid-cols-2 gap-4">
