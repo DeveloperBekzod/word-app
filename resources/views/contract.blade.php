@@ -18,6 +18,7 @@
                             <x-field name="contract_date" type="date">Shartnoma sanasi</x-field>
                         </div>
                         <x-field name="person" type="text">Foydalanuvchi FISH:</x-field>
+
                         <div class="grid grid-cols-2 gap-4">
                             <x-field name="passport" type="text" placeholder="AA 7777777">Passport seriya va
                                 raqami:</x-field>
@@ -35,14 +36,17 @@
                             <x-field name="price" type="number">Narxi(so'm):</x-field>
                         </div>
                         {{-- <x-field name="total" type="number">Jami summa:</x-field> --}}
+
                         <x-textarea name="description">Izoh:</x-textarea>
                         <hr>
                         <x-field name="buyer" type='text'>Haridor FISH:</x-field>
+
                         <div class="grid grid-cols-2 gap-4">
                             <x-field name="buyer_passport" type='text' placeholder="AA 7777777">Passport seriya va
                                 raqami:</x-field>
                             <x-field name="buyer_passport_date" type='date'>Berilgan sanasi:</x-field>
                         </div>
+
                         <x-field name="buyer_passport_givenBy" type='text'>Kim tomonidan berilgan:</x-field>
                         <x-textarea name="buyer_address">Yashash manzili:</x-textarea>
                         <x-textarea name="buyer_description">Izoh:</x-textarea>
