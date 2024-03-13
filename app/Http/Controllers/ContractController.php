@@ -191,6 +191,16 @@ class ContractController extends Controller
 
 
         // Save to DB
+        $contract     = Contract::query()->create($requestData);
+        $data         = $contract->getAttributes();
+        foreach ($paymentSchedule as $key => $value) {
+            // dd($value);
+            $payment = PaymentSchedule::query()->create([
+                'contract_id' => $data['id'],
+                'paymentDate' => date('Y-m-d H:i:s', strtotime($value['paymentDate'])),
+                'paymentAmount' => $value['paymentAmount'],
+            ]);
+        }
 
         return to_route('download')->with('message', 'Shartnoma muvaffaqqiyatli tuzildi !');
     }
