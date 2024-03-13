@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Classes\NumToWord;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -138,7 +139,10 @@ class ContractController extends Controller
         ]);
         $requestData  = $request->all();
         $requestData['total'] = (int)$requestData['amount'] * (int)$requestData['price'];
-
+        $price = $requestData['price'];
+        $totalPrice = $requestData['total'];
+        $priceInWord = NumToWord::convertNumberToWord($price);
+        $totalPriceInWord = NumToWord::convertNumberToWord($totalPrice);
         $values = [
             'contract_number'        => $requestData['contract_number'],
             'contract_date'          => date('d.m.Y', strtotime($requestData['contract_date'])),
@@ -149,10 +153,12 @@ class ContractController extends Controller
             'address'                => $requestData['address'],
             'phone'                  => $requestData['phone'],
             'product'                => $requestData['product'],
-            'amount'                 => $requestData['amount'],
             'price'                  => $requestData['price'],
-            // 'total'                 => (int)$requestData['amount'] * (int)$requestData['price'],
+            'priceInWord'            => $priceInWord,
+            'amount'                 => $requestData['amount'],
             'total'                  => $requestData['total'],
+            'totalInWord'            => $totalPriceInWord,
+            // 'total'                 => (int)$requestData['amount'] * (int)$requestData['price'],
             'description'            => $requestData['description'],
             'buyer'                  => $requestData['buyer'],
             'buyer_passport'         => $requestData['buyer_passport'],
