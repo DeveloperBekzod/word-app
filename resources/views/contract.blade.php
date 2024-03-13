@@ -18,21 +18,20 @@
                             <x-field name="contract_date" type="date">SHartnoma sanasi</x-field>
                         </div>
                         <x-field name="person" type="text">Foydalanuvchi FISH:</x-field>
-                        <x-field name="passport" type="text" pattern="[A-Z]{2} [0-9]{7}"
-                            placeholder="AA 7777777">Passport seriya va raqami:</x-field>
+                        <x-field name="passport" type="text" placeholder="AA 7777777">Passport seriya va
+                            raqami:</x-field>
                         <x-field name="passport_date" type="date">Berilgan sanasi:</x-field>
                         <x-field name="givenBy" type="text">Kim tomonidan berilgan:</x-field>
                         <x-textarea name="address">Yashash manzili:</x-textarea>
-                        <x-field name="phone" type="tel" pattern="+[0-9]{13}"
-                            placeholder='+998999999999'>Telefon:</x-field>
+                        <x-field name="phone" type="tel" placeholder='+998999999999'>Telefon:</x-field>
                         <x-field name="product" type="text">Mahsulot nomi:</x-field>
                         <x-field name="amount" type="number">Miqrodi (dona):</x-field>
                         <x-field name="price" type="number">Mahsulot narxi(so'm):</x-field>
                         <x-field name="total" type="number">Jami summa:</x-field>
                         <x-textarea name="description">Izoh:</x-textarea>
                         <x-field name="buyer" type='text'>Haridor FISH:</x-field>
-                        <x-field name="buyer_passport" type='text' pattern="[A-Z]{2} [0-9]{7}"
-                            placeholder="AA 7777777">Passport seriya va raqami:</x-field>
+                        <x-field name="buyer_passport" type='text' placeholder="AA 7777777">Passport seriya va
+                            raqami:</x-field>
                         <x-field name="buyer_passport_givenBy" type='text'>Kim tomonidan berilgan:</x-field>
                         <x-field name="buyer_passport_date" type='date'>Berilgan sanasi:</x-field>
                         <x-textarea name="buyer_address">Yashash manzili:</x-textarea>
