@@ -18,8 +18,8 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $schedule = (count(Schema::getColumnListing('payment_schedules')) - 4) / 2;
-        return view('contract', compact('schedule'));
+        // $schedule = (count(Schema::getColumnListing('payment_schedules')) - 4) / 2;
+        return view('contract'  /*, compact('schedule') */);
     }
 
     /**

@@ -53,6 +53,6 @@ class Contract extends Model
 
     public function paymentSchedules()
     {
-        $this->hasMany(PaymentSchedule::class);
+        return $this->hasMany(PaymentSchedule::class);
     }
 }
