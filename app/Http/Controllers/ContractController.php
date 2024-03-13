@@ -180,7 +180,6 @@ class ContractController extends Controller
                 'paymentAmount' => round($requestData['total'] / (int)$requestData['payment_type'], 2),
             ];
         }
-        // dd($paymentSchedule);
         $docPattern = storage_path('app/local/шартнома янги2.docx');
         $pathToSave = storage_path('app/public/Contract.docx');
         if (file_exists($docPattern)) {
@@ -189,6 +188,9 @@ class ContractController extends Controller
             $templateProcessor->cloneRowAndSetValues('payment', $paymentSchedule);
             $templateProcessor->saveAs($pathToSave);
         }
+
+
+        // Save to DB
 
         return to_route('download')->with('message', 'Shartnoma muvaffaqqiyatli tuzildi !');
     }
