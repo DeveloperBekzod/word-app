@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('address');
             $table->string('phone');
             $table->string('product');
+            $table->unsignedInteger('price');
             $table->unsignedInteger('amount');
             $table->unsignedBigInteger('total');
             $table->text('description');

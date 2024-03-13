@@ -18,25 +18,35 @@
                             <x-field name="contract_date" type="date">SHartnoma sanasi</x-field>
                         </div>
                         <x-field name="person" type="text">Foydalanuvchi FISH:</x-field>
-                        <x-field name="passport" type="text" placeholder="AA 7777777">Passport seriya va
-                            raqami:</x-field>
-                        <x-field name="passport_date" type="date">Berilgan sanasi:</x-field>
+                        <div class="grid grid-cols-2 gap-4">
+                            <x-field name="passport" type="text" placeholder="AA 7777777">Passport seriya va
+                                raqami:</x-field>
+                            <x-field name="passport_date" type="date">Berilgan sanasi:</x-field>
+                        </div>
                         <x-field name="givenBy" type="text">Kim tomonidan berilgan:</x-field>
                         <x-textarea name="address">Yashash manzili:</x-textarea>
                         <x-field name="phone" type="tel" pattern="+[0-9]{13}"
                             placeholder='+998999999999'>Telefon:</x-field>
-                        <x-field name="product" type="text">Mahsulot nomi:</x-field>
-                        <x-field name="amount" type="number">Miqrodi (dona):</x-field>
-                        <x-field name="price" type="number">Mahsulot narxi(so'm):</x-field>
-                        <x-field name="total" type="number">Jami summa:</x-field>
+                        <hr>
+                        <div class="text-xl text-center">Mahsulot:</div>
+                        <x-field name="product" type="text">Nomi:</x-field>
+                        <div class="grid grid-cols-2 gap-4">
+                            <x-field name="amount" type="number">Miqrodi (dona):</x-field>
+                            <x-field name="price" type="number">Narxi(so'm):</x-field>
+                        </div>
+                        {{-- <x-field name="total" type="number">Jami summa:</x-field> --}}
                         <x-textarea name="description">Izoh:</x-textarea>
+                        <hr>
                         <x-field name="buyer" type='text'>Haridor FISH:</x-field>
-                        <x-field name="buyer_passport" type='text' placeholder="AA 7777777">Passport seriya va
-                            raqami:</x-field>
+                        <div class="grid grid-cols-2 gap-4">
+                            <x-field name="buyer_passport" type='text' placeholder="AA 7777777">Passport seriya va
+                                raqami:</x-field>
+                            <x-field name="buyer_passport_date" type='date'>Berilgan sanasi:</x-field>
+                        </div>
                         <x-field name="buyer_passport_givenBy" type='text'>Kim tomonidan berilgan:</x-field>
-                        <x-field name="buyer_passport_date" type='date'>Berilgan sanasi:</x-field>
                         <x-textarea name="buyer_address">Yashash manzili:</x-textarea>
                         <x-textarea name="buyer_description">Izoh:</x-textarea>
+                        <hr>
                         <div>
                             <div class="block leading-5">To'lov turini tanlang</div>
                             <div class="flex justify-around mb-14">
@@ -110,7 +120,8 @@
                         <x-field name="paymentAmount12" type="number">12-to'lov miqdori:</x-field> --}}
                         <div>
                             <button type="submit"
-                                class="rounded-md bg-indigo-600 mr-2 px-11 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Yuborish</button>
+                                class="rounded-md bg-indigo-600 mr-2 px-11 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Yuklab
+                                olish</button>
                             <input type="reset" placeholder=""
                                 class="rounded-md bg-red-600 px-11 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                 value="Tozalash">

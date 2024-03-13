@@ -40,6 +40,7 @@ class Contract extends Model
         'address',
         'phone',
         'product',
+        'price',
         'amount',
         'total',
         'description',
