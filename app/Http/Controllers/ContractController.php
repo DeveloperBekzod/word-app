@@ -115,7 +115,7 @@ class ContractController extends Controller
 
 
 
-        // Save with generated table
+        // Form data validation rules
         $request->validate([
             'contract_number'        => "required|numeric",
             'contract_date'          => "required|date",
@@ -138,6 +138,8 @@ class ContractController extends Controller
             'buyer_description'      => 'required|string',
         ]);
         $requestData  = $request->all();
+
+        // Prepare values
         $requestData['total'] = (int)$requestData['amount'] * (int)$requestData['price'];
         $price = $requestData['price'];
         $totalPrice = $requestData['total'];
@@ -167,6 +169,8 @@ class ContractController extends Controller
             'buyer_address'          => $requestData['buyer_address'],
             'buyer_description'      => $requestData['buyer_description'],
         ];
+
+        // Prepare payment schedules
         $paymentSchedule = [];
         $next = date('d.m.Y', strtotime($requestData['contract_date']));
         for ($i = 1; $i <= (int)$requestData['payment_type']; $i++) {
